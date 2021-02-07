@@ -9,6 +9,9 @@ require_once './PHPMailer/Exception.php';
 require_once './PHPMailer/SMTP.php';
 require_once './PHPMailer/PHPMailerAutoload.php';
 require_once 'vendor/autoload.php';
+require './vendor/autoload.php';
+require 'class.phpmailer.php';
+require 'PHPMailerAutoload.php';
 
 try {
 
