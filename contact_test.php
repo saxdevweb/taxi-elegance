@@ -3,15 +3,16 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailerAutoload;
 
-require_once './PHPMailer/PHPMailer.php';
-require_once './PHPMailer/Exception.php';
-require_once './PHPMailer/SMTP.php';
-require_once './PHPMailer/PHPMailerAutoload.php';
+// require_once './PHPMailer/PHPMailer.php';
+// require_once './PHPMailer/Exception.php';
+// require_once './PHPMailer/SMTP.php';
+// require_once './PHPMailer/PHPMailerAutoload.php';
 require_once 'vendor/autoload.php';
-require './vendor/autoload.php';
-require 'class.phpmailer.php';
-require 'PHPMailerAutoload.php';
+
+//require 'class.phpmailer.php';
+//require 'PHPMailerAutoload.php';
 
 try {
 
@@ -34,7 +35,7 @@ try {
     $mail->isSMTP();
     $mail->HOST = 'mail.gandi.net';
     $mail->SMTPAuth = true;
-    //$mail->SMTPSecure = "tls";
+    $mail->SMTPSecure = "tls";
     $mail->Password = '5GQmR2Fj*#NVF7';
     $mail->Username = 'admin@taxi-elegance.tld';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //PHPMailer::ENCRYPTION_SMTPS; //
