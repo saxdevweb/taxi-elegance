@@ -8,7 +8,7 @@ require_once './PHPMailer/PHPMailer.php';
 require_once './PHPMailer/Exception.php';
 require_once './PHPMailer/SMTP.php';
 require_once './PHPMailer/PHPMailerAutoload.php';
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 try {
 
