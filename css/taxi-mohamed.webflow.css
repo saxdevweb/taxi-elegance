@@ -636,6 +636,12 @@ figcaption {
   margin-bottom: 30px;
 }
 
+.sdw-alert {
+  background-color: #70db70;
+  color: rgb(19, 17, 17);
+  text-align: center;
+}
+
 .status-message {
   padding: 9px 30px;
   background-color: #202020;

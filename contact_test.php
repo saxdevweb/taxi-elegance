@@ -5,53 +5,52 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\PHPMailerAutoload;
 
-// require_once './PHPMailer/PHPMailer.php';
-// require_once './PHPMailer/Exception.php';
-// require_once './PHPMailer/SMTP.php';
-// require_once './PHPMailer/PHPMailerAutoload.php';
 require_once 'vendor/autoload.php';
 
-//require 'class.phpmailer.php';
-//require 'PHPMailerAutoload.php';
-
 try {
-
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $date = $_POST['Date'];
-  $heureArrivee = $_POST['heure-arrivee'];
-  $message = $_POST['message'];
+  $emailUser = $_POST['email'];
 
   if (isset($_POST['email'])) {
-    //function sendEmail($to, $subject, $body, $headers)
-    // {
-
+    $email = "service@taxi-elegance.fr"; //$_POST['email'];
     $to = "admin@taxi-elegance.fr";
-    $email = "admin@taxi-elegance.fr"; //$_POST['email'];
+    $name = $_POST['name'];
+    $date = $_POST['Date'];
+    $heureArrivee = $_POST['heure-arrivee'];
+    $message = $_POST['message'];
     $subject = "Reservation taxi en ligne de : " . $name;
 
     // SMTP CONFIG
     $mail = new PHPMailer(true);
-    $mail->isSMTP();
+    $mail->isMail();
     $mail->HOST = 'mail.gandi.net';
     $mail->SMTPAuth = true;
     $mail->SMTPSecure = "tls";
     $mail->Password = '5GQmR2Fj*#NVF7';
     $mail->Username = 'admin@taxi-elegance.tld';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //PHPMailer::ENCRYPTION_SMTPS; //
-    $mail->SMTPDebug = SMTP::DEBUG_CONNECTION;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->Port = 587;
+
+    $mail->SMTPOptions = array(
+      'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+      )
+    );
 
     //Recipients
     $mail->isHTML(true);
     $mail->setFrom($email, $name);
-    $mail->addAddress('saxdevweb@gmail.com', 'Joe User');
+    $mail->addAddress('service@taxi-elegance.fr', 'Service Taxi Reservation');
     $mail->addReplyTo($to, 'Service');
-    $mail->Subject = ("$email ($subject)");
-    $mail->Body = $message;
+    $mail->addCC($emailUser);
+    $mail->addBCC('m.boulayountaxi@gmail.com');
+    $mail->Subject = ("$emailUser ($subject)");
+    $mail->Body = $name  . ' - Email : ' . $emailUser . " - DATE DU TRANSPORT : " . $date . " - HEURE DE PRISE EN CHARGE:  " . $heureArrivee . ' <br/> ' . $message;
 
     $mail->send();
-    $msg = $name  . ' & ' . $email . " - " . $date . " - " . $heureArrivee . " - " . $message  . " - FIN";
+    $msg = $name  . ' - Email : ' . $emailUser . ' <br/> ' . ' Votre message est envoyé avec SUCCES!';
   }
 } catch (Exception $e) {
   echo $e->getMessage(); //Boring error messages from anything else!
@@ -100,7 +99,7 @@ try {
         <nav role="navigation" class="navigation-items w-nav-menu">
           <a href="index.html" class="navigation-item w-nav-link">ACCUEIL</a>
           <a href="projects.html" class="navigation-item w-nav-link">RESERVER</a>
-          <a href="contact.html" aria-current="page" class="navigation-item w-nav-link w--current">Contact</a>
+          <a href="contact_test.php" aria-current="page" class="navigation-item w-nav-link w--current">CONTACT</a>
         </nav>
         <div class="menu-button w-nav-button"><img src="images/menu-icon_1menu-icon.png" width="22" alt="" class="menu-icon"></div>
       </div>
@@ -121,7 +120,9 @@ try {
       <div class="w-layout-grid contact-form-grid">
         <div id="w-node-509be705858e-d767fa79" class="contact-form-wrap">
           <div class="contact-form-heading-wrap">
-            <div>MESSAGE : <?php echo $msg; ?> </div>
+            <div class="sdw-alert">
+              <?php echo $msg; ?>
+            </div>
             <h2 class="contact-heading">Contactez-nous</h2>
             <div class="paragraph-light">Assurez-vous de recevoir une confirmation pour votre prise en charge. Dans le cas où aucune confirmation ne vous a été envoyée par mail, SMS, ou appel, n’hésitez pas à nous contacter directement par téléphone.</div>
           </div>
@@ -131,7 +132,7 @@ try {
             <form method="post" id="sendEmail" name="sendTest" action="contact_test.php" class="get-in-touch-form">
               <label for="name">Name</label>
               <input type="text" class="text-field cc-contact-field w-input" maxlength="256" name="name" data-name="Name" placeholder="Enter your name" id="Name">
-              <label for="Email-2">Email Address</label>
+              <label for="email">Email Address</label>
               <input type="email" class="text-field cc-contact-field w-input" maxlength="256" name="email" data-name="email" placeholder="Enter your email" id="email" required="">
               <div class="w-row">
                 <div class="w-col w-col-6"><label>DATE DU TRANSPORT</label></div>
